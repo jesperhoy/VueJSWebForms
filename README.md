@@ -30,7 +30,7 @@ And then use an instance of that component in another Vue.js template:
     Used to render the results of a Vue.js template using global variables.
 
     Parameters:
-    - `DataJS` - ************** TODO *****************
+    - `DataJS` - The Vue.js "data" property. A string with a JSON data object (or JavaScript) to use for rendering.
     - `Compile` - If the template should be rendered by the server side compiler.
     - `RenderTemplate` - If the raw template should also be rendered with compiled output (not needed but helpful for debugging if template is generated dynamically)
 
