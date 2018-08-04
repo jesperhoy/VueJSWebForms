@@ -2,7 +2,7 @@
 
 This library (.NET Framework 4.5) contains 3 ASP.NET Web Form controls to simplify integrating Vue.js with ASP.NET Web Forms.
 
-Each control can also render using the [Vue Light .NET Compiler](https://github.com/jesperhoy/VueLight/releases) instead of Vue.js by setting the "Compile" attribute to `true` (no reactivity).
+Each control can also render using the [Vue Light .NET Compiler](https://github.com/jesperhoy/VueLight) instead of Vue.js by setting the "Compile" attribute to `true` (no reactivity).
 
 ## How to use
 
