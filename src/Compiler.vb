@@ -62,7 +62,8 @@ Public Class Compiler
     If CurElem.SubItems.Count > 1 Then Throw New Exception("Multiple root elements")
     If CurElem.SubItems(0).Text IsNot Nothing Then Throw New Exception("Root elements is text")
 
-    Dim XI = CurElem.SubItems(0).RenderXI(co)
+    CurElem.Name = "template" 'was "~ROOT~" - set to "template" to avoid rendering 
+    Dim XI = CurElem.RenderXI(co)
     XI.Reduce()
 
     Dim sb = New System.Text.StringBuilder
