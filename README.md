@@ -66,8 +66,10 @@ And then use an instance of that component in another Vue.js template:
 
     Note: Only the most basic .vue file layout is supported. The .vue file must have exactly one `<template>` section, one `<script>` section, and NO `<style>` section.\
     The `<script>` section must start with `export default {`\
-    See [car.vue](sample-web-site/car.vue) as an example. 
-
+    See [car.vue](sample-web-site/car.vue) as an example.\
+    For now, the .vue file `<script>` section will only be included in the rendered JavaScript when the control's 
+    `VueLight` attribute set to false (or is not present).
+    
 - **ScriptTemplate**
 
     Used to render HTML in a `<script type="x-template">` tag.
