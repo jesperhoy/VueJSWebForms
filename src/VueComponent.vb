@@ -6,7 +6,7 @@ Public Class Component
 
   REM Using 'Property' rather than 'Dim' - enables Visual Studio HTML editor intellisense
   Property Props As String 'Comma separated list of props
-  Property Compile As Boolean = False
+  Property VueLight As Boolean = False
   Property RenderTemplate As Boolean = False
 
   Protected Overrides Sub Render(writer As HtmlTextWriter)
@@ -14,7 +14,7 @@ Public Class Component
     Dim htw = New HtmlTextWriter(sw)
     MyBase.RenderChildren(htw)
     Dim x = GetVueTemplate(sw.ToString.Trim())
-    If Compile Then RenderCompiled(x, writer) Else RenderVueJS(x, writer)
+    If VueLight Then RenderVueLight(x, writer) Else RenderVueJS(x, writer)
   End Sub
 
   Private Sub RenderVueJS(x As String, writer As HtmlTextWriter)
@@ -50,7 +50,7 @@ Public Class Component
     writer.Write("</script>")
   End Sub
 
-  Private Sub RenderCompiled(x As String, writer As HtmlTextWriter)
+  Private Sub RenderVueLight(x As String, writer As HtmlTextWriter)
     If RenderTemplate Then
       writer.WriteLine("<script type=""x-template"">")
       writer.Write(x)

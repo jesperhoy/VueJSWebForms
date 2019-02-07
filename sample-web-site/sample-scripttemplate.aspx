@@ -1,5 +1,5 @@
 ﻿<%@ Page Language="C#" %>
-<%@ Register Assembly="VueLightWebForms" Namespace="VueLight" TagPrefix="vl" %>
+<%@ Register Assembly="VueJSWebForms" Namespace="VueJSWebForms" TagPrefix="vwf" %>
 
 <html>
 <head>
@@ -10,11 +10,11 @@
   <form id="form1" runat="server">
 
 
-<vl:ScriptTemplate ID="template1" runat="server">
+<vwf:ScriptTemplate ID="template1" runat="server">
 <div>
   {{ message }}
 </div>
-</vl:ScriptTemplate>
+</vwf:ScriptTemplate>
 
 <div id="app"></div>
 

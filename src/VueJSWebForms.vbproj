@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{BDF9BE22-0DBC-4AD0-9FA4-24D20EE2E92D}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>VueLight</RootNamespace>
-    <AssemblyName>VueLightWebForms</AssemblyName>
+    <RootNamespace>VueJSWebForms</RootNamespace>
+    <AssemblyName>VueJSWebForms</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>Windows</MyType>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
@@ -18,7 +18,7 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\Debug\</OutputPath>
-    <DocumentationFile>VueLightWebForms.xml</DocumentationFile>
+    <DocumentationFile>VueJSWebForms.xml</DocumentationFile>
     <NoWarn>
     </NoWarn>
     <WarningsAsErrors>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</WarningsAsErrors>
@@ -29,7 +29,7 @@
     <DefineTrace>true</DefineTrace>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DocumentationFile>VueLightWebForms.xml</DocumentationFile>
+    <DocumentationFile>VueJSWebForms.xml</DocumentationFile>
     <NoWarn>
     </NoWarn>
     <WarningsAsErrors>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</WarningsAsErrors>
@@ -78,6 +78,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="VueFileComponent.vb" />
     <Compile Include="VueRender.vb" />
   </ItemGroup>
   <ItemGroup>

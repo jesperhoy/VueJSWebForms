@@ -1,5 +1,5 @@
 ﻿<%@ Page Language="C#" %>
-<%@ Register Assembly="VueLightWebForms" Namespace="VueLight" TagPrefix="vl" %>
+<%@ Register Assembly="VueJSWebForms" Namespace="VueJSWebForms" TagPrefix="vwf" %>
 
 <%
     vlRender1.DataJS = @"{
@@ -13,18 +13,18 @@
 <body>
   <form id="form1" runat="server">
 
-<vl:Component ID="car" props="make,year" Compile="true" RenderTemplate="true" runat="server">
+<vwf:Component ID="car" props="make,year" VueLight="true" runat="server">
   <li>This {{make}} is {{(new Date()).getFullYear() - year}} years old.</li>
-</vl:Component>
+</vwf:Component>
 
-<vl:Render ID="vlRender1" Compile="true" runat="server">
+<vwf:Render ID="vlRender1" VueLight="true" runat="server">
 <div>
   <h1>{{title}}</h1>
   <ul>
     <car v-for="car in cars" :make="car.Make" :year="car.Year" />
   </ul>
 </div>
-</vl:Render>
+</vwf:Render>
 
   </form>
 </body>
