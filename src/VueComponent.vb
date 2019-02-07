@@ -18,13 +18,23 @@ Public Class Component
   End Sub
 
   Private Sub RenderVueJS(x As String, writer As HtmlTextWriter)
-    writer.WriteLine("<script type=""x-template"" id=""" & ID & "_template"">")
-    writer.Write(x)
-    writer.WriteLine("</script>")
+    Dim tp As String
+    If RenderTemplate Then
+      writer.WriteLine("<script type=""x-template"" id=""" & ID & "_template"">")
+      writer.Write(x)
+      writer.WriteLine("</script>")
+      tp = "#" & ID & "_template"
+    Else
+      x = x.Replace(vbCrLf, " ").Replace(vbLf, " ").Replace(vbCr, " ").Replace(vbTab, " ")
+      While x.IndexOf("  ") > 0
+        x = x.Replace("  ", " ")
+      End While
+      tp = x.Replace("\", "\\").Replace("'", "\'")
+    End If
 
     writer.WriteLine("<script>")
     writer.Write("Vue.component('" & ID & "', {" & vbCrLf &
-           "    template: '#" & ID & "_template'")
+                 "    template: '" & tp & "'")
     If Not String.IsNullOrEmpty(Props) Then
       Dim pa = Props.Split(","c)
       x = "["

@@ -17,13 +17,24 @@ Public Class Render
   End Sub
 
   Private Sub RenderVueJS(x As String, writer As HtmlTextWriter)
-    writer.WriteLine("<script type=""x-template"" id=""" & ID & "_template"">")
-    writer.Write(x)
-    writer.WriteLine("</script>")
+    Dim tp As String
+    If RenderTemplate Then
+      writer.WriteLine("<script type=""x-template"" id=""" & ID & "_template"">")
+      writer.Write(x)
+      writer.WriteLine("</script>")
+      tp = "#" & ID & "_template"
+    Else
+      x = x.Replace(vbCrLf, " ").Replace(vbLf, " ").Replace(vbCr, " ").Replace(vbTab, " ")
+      While x.IndexOf("  ") > 0
+        x = x.Replace("  ", " ")
+      End While
+      tp = x.Replace("\", "\\").Replace("'", "\'")
+    End If
+
     writer.WriteLine("<div id=""" & ID & "_replace""></div>")
     writer.WriteLine("<script>")
     writer.WriteLine("new Vue({" & vbCrLf &
-                     "    template: '#" & ID & "_template'," &
+                     "    template: '" & tp & "'," &
                      "    el: '#" & ID & "_replace'," &
                      "    data: " & DataJS & "})")
     writer.Write("</script>")

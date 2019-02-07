@@ -32,7 +32,7 @@ And then use an instance of that component in another Vue.js template:
     Parameters:
     - `DataJS` - The Vue.js "data" property. A string with a JSON data object (or JavaScript) to use for rendering.
     - `Compile` - If the template should be rendered by the server side compiler.
-    - `RenderTemplate` - If the raw template should also be rendered with compiled output (not needed but helpful for debugging if template is generated dynamically)
+    - `RenderTemplate` - If the raw template should be rendered (in a `<script type="x-template">` tag). Not technically necessary and makes output larger, but helpful for debugging if template is generated dynamically.
 
     Examples of use in a Web Forms page:
     - [Rendered with Vue Light .NET Compiler](sample-web-site/sample1-compiled.aspx)
@@ -46,7 +46,7 @@ And then use an instance of that component in another Vue.js template:
     - `ID` - the name of the component.
     - `Props` - a comma separated list of property names for the component.
     - `Compile` - If the template should be rendered by the server side compiler.
-    - `RenderTemplate` - If the raw template should also be rendered with compiled output (not needed but helpful for debugging if template is generated dynamically)
+    - `RenderTemplate` - If the raw template should be rendered (in a `<script type="x-template">` tag). Not technically necessary and makes output larger, but helpful for debugging if template is generated dynamically.
 
     Examples of use in a Web Forms page:
     - [Rendered with Vue Light .NET Compiler](sample-web-site/sample1-compiled.aspx)
