@@ -1,7 +1,7 @@
 ﻿Imports System.Web.UI
 
 <ParseChildren>
-Public Class ScriptTemplate
+Public Class Template
   Inherits System.Web.UI.WebControls.WebControl
 
   Protected Overrides Sub Render(writer As HtmlTextWriter)

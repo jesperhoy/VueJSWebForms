@@ -1,8 +1,8 @@
 #  Vue.js ASP.NET Web Forms Helpers
 
-This library (.NET Framework 4.5) contains 4 ASP.NET Web Forms controls to simplify integrating Vue.js with ASP.NET Web Forms.
+This library (.NET Framework 4.5) contains 3 ASP.NET Web Forms controls to simplify integrating Vue.js with ASP.NET Web Forms.
 
-Each control can render for Vue.js or for the [Vue Light .NET Compiler](https://github.com/jesperhoy/VueLight) (no reactivity) by setting the "VueLight" attribute (false/true).
+The **Component** and **App** controls can either render for Vue.js or for the [Vue Light .NET Compiler](https://github.com/jesperhoy/VueLight) (no reactivity) by setting the "VueLight" attribute (false/true).
 
 ## How to use
 
@@ -10,67 +10,48 @@ Each control can render for Vue.js or for the [Vue Light .NET Compiler](https://
 
 You can reference the assembly in a Web Forms page like this:
 
-    <%@ Register Assembly="VueJSWebForms" Namespace="VueJSWebForms" TagPrefix="vwf" %>
+    <%@ Register Assembly="VueJSWebForms" Namespace="VueJSWebForms" TagPrefix="vue" %>
 
-And then instantiate a control (in this case "Component") like this:
+And then use the controls like this:
 
-    <vwf:Component id="thing" params="year,color" runat="server">
-        ...Vue.js template...
-    </vwf:/Component>        
+    <vue:Component name="car" props="make,year" runat="server">
+        <li>This {{make}} is {{(new Date()).getFullYear() - year}} years old.</li>
+    </vue:Component>        
 
-And then use an instance of that component in another Vue.js template:
+    <vue:App datajs="[{Make:'Buick',Year:2001},{Make:'Pontiac',Year:1998}]" runat="server" >
+        <ul>
+            <car v-for="car in cars" :make="car.Make" :year="car.Year" />
+        </ul>
+    </vue:App>
 
-    <thing year="2018" color="blue" />
 
 
 ## ASP.NET Web Forms controls 
 
-- **Render**
-
-    Used to render the results of a Vue.js template using global variables.
-
-    Parameters:
-    - `DataJS` - The Vue.js "data" property. A string with a JSON data object (or JavaScript) to use for rendering.
-    - `VueLight` (true/false) - If the template should be compiled and rendered by the Vue Light server side compiler.
-    - `RenderTemplate` (true/false) - If the raw template should be rendered (in a `<script type="x-template">` tag). Not technically necessary and makes output larger, but helpful for debugging if template is generated dynamically.
-
-    Examples of use in a Web Forms page:
-    - [Rendered with Vue Light .NET Compiler](sample-web-site/sample-vuelight.aspx)
-    - [Rendered with Vue.js](sample-web-site/sample-vuejs.aspx)
-
 - **Component**
 
-    Makes it easy to render a simple Vue.js component for re-use in Vue.js application or in other Vue.js components.
+    Makes it easy to render a Vue.js component for re-use in a Vue.js application or in other Vue.js components.
 
     Parameters:
-    - `ID` - the name of the component.
-    - `Props` - a comma separated list of property names for the component.
-    - `VueLight` (true/false) - If the template should be compiled and rendered by the Vue Light server side compiler.
+    - `File` - virtual path of a .vue file (for example "~/components/list1.vue"). If not specified, the content of the control is used as the Vue.js template instead.
+    - `Name` - the name of the component (tag-name in app/other components). If not specified and `File` is, the file name (without path / suffix) will be used as the component name.
+    - `Props` - a comma separated list of property names for the component (not used when `File` is specified).
     - `RenderTemplate` (true/false) - If the raw template should be rendered (in a `<script type="x-template">` tag). Not technically necessary and makes output larger, but helpful for debugging if template is generated dynamically.
+    - `VueLight` (true/false) - If the template should be compiled and rendered by the Vue Light server side compiler (no reactivity).
 
-    Examples of use in a Web Forms page:
-    - [Rendered with Vue Light .NET Compiler](sample-web-site/sample-vuelight.aspx)
-    - [Rendered with Vue.js](sample-web-site/sample-vuejs.aspx)
+- **App**
 
-- **FileComponent**
-
-    Use to render a Vus.js component from a .vue file for re-use in Vue.js application or in other Vue.js components.
+    Used to render the results of a Vue.js template.
 
     Parameters:
-    - `File` - virtual path of the .vue file (for example "~/components/list1.vue").
-    - `ID` - the name of the component.
-    - `VueLight` (true/false) - If the template should be compiled and rendered by the Vue Light server side compiler.
-    - `RenderTemplate` (true/false) - If the raw template should be rendered (in a `<script type="x-template">` tag). Not technically necessary and makes output larger, but helpful for debugging.
+    - `File` - virtual path of a .vue file (for example "~/components/list1.vue"). If not specified, the content of the control is used as the Vue.js template instead.
+    - `DataJS` - The Vue.js "data" property. A string with a JSON data object (or JavaScript) to use for rendering.
+    - `Name` - the name of the Vue.js app variable. Defaults to "app".
+    - `RenderTemplate` (true/false) - If the raw template should be rendered (in a `<script type="x-template">` tag). Not technically necessary and makes output larger, but helpful for debugging if template is generated dynamically.
+    - `VueLight` (true/false) - If the template should be compiled and rendered by the Vue Light server side compiler (no reactivity).
 
-    [Example of use in a Web Forms page](sample-web-site/sample-vue-file.aspx)
-
-    Note: Only the most basic .vue file layout is supported. The .vue file must have exactly one `<template>` section, one `<script>` section, and NO `<style>` section.\
-    The `<script>` section must start with `export default {`\
-    See [car.vue](sample-web-site/car.vue) as an example.\
-    For now, the .vue file `<script>` section will only be included in the rendered JavaScript when the control's 
-    `VueLight` attribute set to false (or is not present).
-    
-- **ScriptTemplate**
+  
+- **Template**
 
     Used to render HTML in a `<script type="x-template">` tag.
 
@@ -79,18 +60,28 @@ And then use an instance of that component in another Vue.js template:
     Parameters:
     - `ID` - will be rendered as the ID for the script tag.
 
-    [Example of use in a Web Forms page](sample-web-site/sample-scripttemplate.aspx)
+
+## Examples
+
+- [Using Component and App controls with Vue.js](sample-web-site/sample-vuejs.aspx)
+- [Using Component and App controls with Vue Light .NET Compiler](sample-web-site/sample-vuelight.aspx)
+- [Using Template control](sample-web-site/sample-template.aspx)
+- [Using .vue file](sample-web-site/sample-vue-file.aspx)
 
 
-Common for the **Render**, **Component**, and **ScriptTemplate** controls above is that their content is used as the Vue.js template - for example:
+## Note about .vue files
 
-    <vl:Render runat="server">
-        <ul v-show="z">
-            <li v-for="x in y">{{x}}</li>
-        </ul>
-    </vl:Renter>
+You can specify a .vue file in the `File` parameter of the **Component** and **App** controls
 
-The **FileComponent** control does not support any content (template is obtained from the .vue file instead).
+Only the most basic .vue file layout is supported:
+- The .vue file must have exactly one `<template>` section, one `<script>` section, and NO `<style>` section.
+- The `<script>` section must start with `export default {`
+
+See [car.vue](sample-web-site/car.vue) as an example.
+
+For now, the .vue file `<script>` section will only be included in the rendered JavaScript when the control's 
+    `VueLight` attribute set to false (or is not present).
+
 
 
 ## License

@@ -1,5 +1,5 @@
 ﻿<%@ Page Language="C#" %>
-<%@ Register Assembly="VueJSWebForms" Namespace="VueJSWebForms" TagPrefix="vwf" %>
+<%@ Register Assembly="VueJSWebForms" Namespace="VueJSWebForms" TagPrefix="vue" %>
 
 <html>
 <head>
@@ -10,22 +10,22 @@
   <form id="form1" runat="server">
 
 
-<vwf:ScriptTemplate ID="template1" runat="server">
+<vue:Template ID="template1" runat="server">
 <div>
   {{ message }}
 </div>
-</vwf:ScriptTemplate>
+</vue:Template>
 
 <div id="app"></div>
 
 <script>
-new Vue({
-  el: '#app',
-  template: '#template1',
-  data: {
-    message: 'Hello Vue!'
-  }
-  })
+  new Vue({
+    el: '#app',
+    template: '#template1',
+    data: {
+      message: 'Hello Vue!'
+    }
+  });
 </script>
 
   </form>
