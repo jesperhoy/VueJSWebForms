@@ -55,19 +55,14 @@ Public Class Component
       writer.WriteLine("<script type=""x-template"" id=""" & Name & "_template"">")
       writer.Write(x)
       writer.WriteLine("</script>")
-      tp = "#" & Name & "_template"
+      tp = "'#" & Name & "_template'"
     Else
-      REM minimize whitepace
-      x = x.Replace(vbCrLf, " ").Replace(vbLf, " ").Replace(vbCr, " ").Replace(vbTab, " ")
-      While x.IndexOf("  ") > 0
-        x = x.Replace("  ", " ")
-      End While
-      tp = x.Replace("\", "\\").Replace("'", "\'")
+      tp = JSStringEncode(x)
     End If
 
     writer.WriteLine("<script>")
     writer.WriteLine("Vue.component('" & Name & "', {" & vbCrLf &
-           "  template: '" & tp & "'," & vbCrLf &
+           "  template: " & tp & "," & vbCrLf &
            scrpt.Substring(1).Trim & ");")
     writer.WriteLine("</script>")
   End Sub

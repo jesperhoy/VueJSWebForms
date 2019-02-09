@@ -66,6 +66,10 @@
     Return curFileVP.Substring(0, i + 1) & p
   End Function
 
+  Friend Function JSStringEncode(x As String) As String
+    Return "'" & (x.Replace("\", "\\").Replace(vbCrLf, "\n").Replace(vbCr, "\n").Replace(vbLf, "\n").Replace(vbTab, "\t").Replace("'", "\'")) & "'"
+  End Function
+
   Friend Structure ParseVueFileResult
     Public Template As String
     Public Script As String
