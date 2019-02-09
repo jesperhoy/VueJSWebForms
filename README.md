@@ -33,7 +33,7 @@ And then use the controls like this:
     Makes it easy to render a Vue.js component for re-use in a Vue.js application or in other Vue.js components.
 
     Parameters:
-    - `File` - virtual path of a .vue file (for example "~/components/list1.vue"). If not specified, the content of the control is used as the Vue.js template instead.
+    - `File` - virtual path of a .vue file (for example "/components/list1.vue"). If not specified, the content of the control is used as the Vue.js template instead.
     - `Name` - the name of the component (tag-name in app/other components). If not specified and `File` is, the file name (without path / suffix) will be used as the component name.
     - `Props` - a comma separated list of property names for the component (not used when `File` is specified).
     - `RenderTemplate` (true/false) - If the raw template should be rendered (in a `<script type="x-template">` tag). Not technically necessary and makes output larger, but helpful for debugging if template is generated dynamically.
@@ -44,7 +44,7 @@ And then use the controls like this:
     Used to render the results of a Vue.js template.
 
     Parameters:
-    - `File` - virtual path of a .vue file (for example "~/components/list1.vue"). If not specified, the content of the control is used as the Vue.js template instead.
+    - `File` - virtual path of a .vue file (for example "/components/list1.vue"). If not specified, the content of the control is used as the Vue.js template instead.
     - `DataJS` - The Vue.js "data" property. A string with a JSON data object (or JavaScript) to use for rendering.
     - `Name` - the name of the Vue.js app variable. Defaults to "app".
     - `RenderTemplate` (true/false) - If the raw template should be rendered (in a `<script type="x-template">` tag). Not technically necessary and makes output larger, but helpful for debugging if template is generated dynamically.

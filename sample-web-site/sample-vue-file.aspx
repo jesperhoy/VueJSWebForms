@@ -16,7 +16,7 @@
 <body>
   <form id="form1" runat="server">
 
-<vue:Component File="~/car.vue" runat="server" />
+<vue:Component File="/car.vue" runat="server" />
 
 <vue:App id="VueApp1" runat="server">
 <div>
