@@ -59,6 +59,7 @@
     <Import Include="System.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="JSBuilder.vb" />
     <Compile Include="modHelpers.vb" />
     <Compile Include="VueTemplate.vb" />
     <Compile Include="Compiler.vb" />

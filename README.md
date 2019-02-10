@@ -1,8 +1,8 @@
 #  Vue.js ASP.NET Web Forms Helpers
 
-This library (.NET Framework 4.5) contains 3 ASP.NET Web Forms controls to simplify integrating Vue.js with ASP.NET Web Forms.
+This library (.NET Framework 4.5) contains 3 ASP.NET Web Forms controls and a utility class to simplify integrating Vue.js with ASP.NET Web Forms.
 
-The **Component** and **App** controls can either render for Vue.js or for the [Vue Light .NET Compiler](https://github.com/jesperhoy/VueLight) (no reactivity) by setting the "VueLight" attribute (false/true).
+These "helpers" can either render for Vue.js or for the [Vue Light .NET Compiler](https://github.com/jesperhoy/VueLight) (no reactivity).
 
 ## How to use
 
@@ -25,8 +25,19 @@ And then use the controls like this:
     </vue:App>
 
 
+You can use the utility class (JSBuilder) like this (C#):
 
-## ASP.NET Web Forms controls 
+    var b = new VueJSWebForms.JSBuilder();
+    b.AddVueFileComponent("/car.vue");
+    b.AddVueFileComponent("/plane.vue");
+    b.AddVueFileApp("/app.vue","MyData");
+    var Script = b.ToString();
+    // Optionally cache the Script here...
+    Response.Write(Script);
+
+
+
+## Web Forms controls 
 
 - **Component**
 
@@ -61,17 +72,23 @@ And then use the controls like this:
     - `ID` - will be rendered as the ID for the script tag.
 
 
+## JSBuilder utility class
+
+This class can be used to build a JavaScript string from multiple .vue files and/or string templates, and then render this to the browser - and possibly caching / saving the result for optimization.
+
+To use the class, instantiate a new instance, use the Add... methods to include Vue.js components / apps, and finally retrieve the JavaScript using the ToString() method.
+
 ## Examples
 
 - [Using Component and App controls with Vue.js](sample-web-site/sample-vuejs.aspx)
 - [Using Component and App controls with Vue Light .NET Compiler](sample-web-site/sample-vuelight.aspx)
+- [Using Component control with .vue file](sample-web-site/sample-vue-file.aspx)
 - [Using Template control](sample-web-site/sample-template.aspx)
-- [Using .vue file](sample-web-site/sample-vue-file.aspx)
-
+- [Using JSBuilder utility class](sample-web-site/sample-jsbuilder.aspx)
 
 ## Note about .vue files
 
-You can specify a .vue file in the `File` parameter of the **Component** and **App** controls
+You can specify a .vue file in the `File` parameter of the **Component** and **App** controls, and as a parameter with the JSBuilder utility class Add... methods.
 
 Only the most basic .vue file layout is supported:
 - The .vue file must have exactly one `<template>` section, one `<script>` section, and NO `<style>` section.
@@ -79,9 +96,7 @@ Only the most basic .vue file layout is supported:
 
 See [car.vue](sample-web-site/car.vue) as an example.
 
-For now, the .vue file `<script>` section will only be included in the rendered JavaScript when the control's 
-    `VueLight` attribute set to false (or is not present).
-
+The .vue file `<script>` section will only be included in the rendered JavaScript when rendering for Vue.js (not Vue Light).
 
 
 ## License
