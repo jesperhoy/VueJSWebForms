@@ -1,3 +1,5 @@
+NOTE: If you are using the full Vue.js library and Vue.js Single File Components (.vue files), we recommend using the [VueFilesToJS library](https://github.com/jesperhoy/VueFilesToJS) instead.
+
 #  Vue.js ASP.NET Web Forms Helpers
 
 This library (.NET Framework 4.5) contains 3 ASP.NET Web Forms controls and a utility class to simplify integrating Vue.js with ASP.NET Web Forms.
@@ -86,7 +88,7 @@ To use the class, instantiate a new instance, use the Add... methods to include 
 - [Using Template control](sample-web-site/sample-template.aspx)
 - [Using JSBuilder utility class](sample-web-site/sample-jsbuilder.aspx)
 
-## Note about .vue files
+## Note about .vue files (Vue.js Single File Components)
 
 You can specify a .vue file in the `File` parameter of the **Component** and **App** controls, and as a parameter with the JSBuilder utility class Add... methods.
 
@@ -97,6 +99,12 @@ Only the most basic .vue file layout is supported:
 See [car.vue](sample-web-site/car.vue) as an example.
 
 The .vue file `<script>` section will only be included in the rendered JavaScript when rendering for Vue.js (not Vue Light).
+
+NOTE: The [VueFilesToJS library](https://github.com/jesperhoy/VueFilesToJS) has better support for .vue files - including support for `import` statements. 
+
+## Background for project
+
+See [my blog post](https://jesperhoy.com/p42).
 
 
 ## License
