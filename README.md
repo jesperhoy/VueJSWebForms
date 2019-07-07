@@ -115,7 +115,7 @@ Otherwise, the easiest way is to start in-line. Then at some point when the page
 
 - [Using Component and App controls](sample-web-site/sample-vuejs.aspx)
 - [Using Component control with .vue file](sample-web-site/sample-vue-file.aspx)
-- [Using ScriptTemplate control](sample-web-site/sample-scripttemplate.aspx)
+- [Using ServerTemplate control](sample-web-site/sample-servertemplate.aspx)
 
 ## Requirements / limitations for .vue files (including in-lined)
 
