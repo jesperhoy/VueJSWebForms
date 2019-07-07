@@ -7,27 +7,25 @@
 </head>
 
 <body>
-  <form id="form1" runat="server">
 
-
-<vue:Template ID="template1" runat="server">
+<vue:ScriptTemplate ID="template1" runat="server">
 <div>
-  {{ message }}
+  <p>Today is: <%:DateTime.Now.ToLongDateString()%></p>
+  <p>{{ message }}</p>
 </div>
-</vue:Template>
+</vue:ScriptTemplate>
 
 <div id="app"></div>
 
 <script>
   new Vue({
     el: '#app',
-    template: '#template1',
+    template: <%=template1.ContentJS()%>,
     data: {
       message: 'Hello Vue!'
     }
   });
 </script>
 
-  </form>
 </body>
 </html>
