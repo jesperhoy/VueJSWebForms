@@ -68,6 +68,13 @@ The really cool part about in-line Vue components / apps is that the template pa
 </vue:Component>        
 ```
 
+## When to use in-line vs. .vue files?
+
+If you need to include server rendered data inside the Vue template (see above), then in-line is the only option.
+
+Otherwise, the easiest way is to start in-line. Then at some point when the page becomes too big, it is easy to copy the content of each component/app control to separate (.vue) file.
+
+
 ## Web Forms controls 
 
 - **Component**
