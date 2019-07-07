@@ -104,7 +104,7 @@
   End Function
 
   Private Shared WhiteSpace As Char() = (" " & vbTab & vbLf & vbCr).ToArray
-  Private Function SquashWhiteSpace(x As String) As String
+  Public Shared Function SquashWhiteSpace(x As String) As String
     Dim sb = New System.Text.StringBuilder
     Dim p = 0
     Dim i As Integer
@@ -144,7 +144,7 @@
     Return fn.Substring(i + 1)
   End Function
 
-  Private Shared Function JSStringEncode(x As String) As String
+  Public Shared Function JSStringEncode(x As String) As String
     Return "'" & (x.Replace("\", "\\").Replace(vbCrLf, "\n").Replace(vbCr, "\n").Replace(vbLf, "\n").Replace(vbTab, "\t").Replace("'", "\'")) & "'"
   End Function
 

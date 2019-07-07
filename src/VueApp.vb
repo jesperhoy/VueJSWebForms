@@ -16,37 +16,26 @@ Public Class App
     MyBase.RenderChildren(htw)
     Dim Content = sw.ToString.Trim
 
-    Dim DivName = "VueApp"
-    Dim rnd = New Random
-    For i = 0 To 10
-      DivName &= Chr(65 + rnd.Next(0, 26))
-    Next
-    If String.IsNullOrEmpty(VarName) Then VarName = DivName
-    Dim ctx = System.Web.HttpContext.Current
-    Dim f As String
+    Dim opt = MakeVueOptions(Content, File, Options, SquashWS)
 
-    If String.IsNullOrEmpty(File) Then
-      REM In-line template
-      If Content.Length = 0 Then Throw New Exception("Template is empty")
-      If Content.StartsWith("<template>", StringComparison.InvariantCultureIgnoreCase) Then
-        If Not String.IsNullOrEmpty(Options) Then Throw New Exception("Control cannot have 'Options' property when content starts with <template>")
-      Else
-        If String.IsNullOrEmpty(Options) Then Options = "{}"
-        Content = "<template>" & Content & "</template><script>export default " & Options & "</script>"
-      End If
-      f = VueFilesToJS.CompileText(Content, ctx.Server.MapPath("~/"), ctx.Request.Url.AbsolutePath, SquashWS)
+    If Mount Then
+      Dim DivName = "VueApp"
+      Dim rnd = New Random
+      For i = 0 To 10
+        DivName &= Chr(65 + rnd.Next(0, 26))
+      Next
+      If String.IsNullOrEmpty(VarName) Then VarName = DivName
+      writer.WriteLine("<div id=""" & DivName & """></div>")
+      writer.WriteLine("<script>")
+      writer.WriteLine("var " & VarName & "=new Vue(" & opt & ");")
+      writer.WriteLine(VarName & ".$mount('#" & DivName & "');")
+      writer.WriteLine("</script>")
     Else
-      REM .vue File
-      If Content.Length > 0 Then Throw New Exception("Control cannot have content when used with 'File' property")
-      If Not String.IsNullOrEmpty(Options) Then Throw New Exception("Control cannot both 'File' and 'Options' properties")
-      f = VueFilesToJS.Compile(ctx.Server.MapPath("~/"), File, SquashWS)
+      If String.IsNullOrEmpty(VarName) Then Throw New Exception("Must provide 'VarName' property when 'Mount' is False")
+      writer.WriteLine("<script>")
+      writer.WriteLine("var " & VarName & "=new Vue(" & opt & ");")
+      writer.WriteLine("</script>")
     End If
-
-    If Mount Then writer.WriteLine("<div id=""" & DivName & """></div>")
-    writer.WriteLine("<script>")
-    writer.WriteLine("var " & VarName & "=new Vue((" & f & ")());")
-    If Mount Then writer.WriteLine(VarName & ".$mount('#" & DivName & "');")
-    writer.WriteLine("</script>")
   End Sub
 
   Public Overrides Sub RenderBeginTag(writer As HtmlTextWriter)
