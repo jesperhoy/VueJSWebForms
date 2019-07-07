@@ -95,7 +95,7 @@ Otherwise, the easiest way is to start in-line. Then at some point when the page
     Makes it easy to render a Vue.js component for re-use in a Vue.js application or in other Vue.js components.
 
     Attributes/Properties:
-    - `File` - virtual path of a .vue file (for example "/components/list1.vue"). If not specified, the content of the control is used instead (.vue file format).
+    - `File` - virtual path of a .vue file (for example "/components/list1.vue"). If not specified, the content of the control is used instead.
     - `Name` - the name of the component (tag-name in app/other components). If not specified and `File` is, the file name (without path / suffix) will be used as the component name.
     - `Options` - Vue options for the component in JavaScript format. Only used with simple in-line templates.
     - `SquashWS` - Boolean value (default true) indicating if all white space in HTML templates should be squashed (sequences of space, `<LF>`, `<CR>`, `<Tab>` are replaced with a single space).
@@ -105,8 +105,8 @@ Otherwise, the easiest way is to start in-line. Then at some point when the page
     Makes it easy to render a Vue.js application instance.
 
     Attributes/Properties:
-    - `File` - virtual path of a .vue file (for example "/components/list1.vue"). If not specified, the content of the control is used instead (.vue file format).
-    - `VarName` - global JavasScript variable name to reference the Vue instance. If omitted, a random value is used.
+    - `File` - virtual path of a .vue file (for example "/components/list1.vue"). If not specified, the content of the control is used instead.
+    - `VarName` - global JavasScript variable name to reference the Vue instance. Required if `Mount` is set to `false`.
     - `Options` - Vue options for the app in JavaScript format. Only used with simple in-line templates.
     - `Mount` - Boolean value (default true) indicating if a `<div>` tag with a random id should be generated and the Vue instance mounted to this.
     - `SquashWS` - Boolean value (default true) indicating if all white space in HTML templates should be squashed (sequences of space, `<LF>`, `<CR>`, `<Tab>` are replaced with a single space).
