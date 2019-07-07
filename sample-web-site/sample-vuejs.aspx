@@ -7,15 +7,8 @@
   </head>
 <body>
 
-<vue:Component Name="car" runat="server">
-  <template>
-    <li>This {{make}} is {{(new Date()).getFullYear() - year}} years old.</li>
-  </template>
-  <script>
-    export default {
-      props: ['make','year']
-    }
-  </script>
+<vue:Component Name="car" Options="{props: ['make','year']}" runat="server">
+  <li>This {{make}} is {{(new Date()).getFullYear() - year}} years old.</li>
 </vue:Component>
 
 <vue:App runat="server">

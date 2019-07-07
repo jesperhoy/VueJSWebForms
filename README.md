@@ -22,7 +22,21 @@ And then use the controls with .vue files like this:
 <vue:App file="/app.vue" runat="server" />
 ```
 
-Or in-line like this:
+Or with simple in-line templates like this:
+
+```HTML
+<vue:Component name="car" options="{props: ['make','year']}" runat="server">
+    <li>This {{make}} is {{(new Date()).getFullYear() - year}} years old.</li>
+</vue:Component>        
+
+<vue:App options="{data:{cars:[{Make:'Buick',Year:2001},{Make:'Pontiac',Year:1998}]}}" runat="server" >
+    <ul>
+        <car v-for="car in cars" :make="car.Make" :year="car.Year" />
+    </ul>
+</vue:App>
+```
+
+Or with in-line templates in .vue file format like this:
 
 ```HTML
 <vue:Component name="car" runat="server">
@@ -35,9 +49,7 @@ Or in-line like this:
         }
     </script>
 </vue:Component>        
-```
 
-```HTML
 <vue:App runat="server" >
     <template>
         <ul>
@@ -51,9 +63,10 @@ Or in-line like this:
     </script>
 </vue:App>
 ```
-...or any combination.
 
-The really cool part about in-line Vue components / apps is that the template part can include ASP.NET Web Forms server tags, which are rendered before Vue.js compiles the template. For example:
+Note: If an in-line template starts with `<template>`, then the library treats it as .vue file format. Otherwise it treats it as simple.
+
+The really cool part about in-line templates is that they can include ASP.NET Web Forms server tags, which are rendered before Vue.js compiles the template. For example:
 
 ```HTML
 <vue:App runat="server">
@@ -84,6 +97,7 @@ Otherwise, the easiest way is to start in-line. Then at some point when the page
     Attributes/Properties:
     - `File` - virtual path of a .vue file (for example "/components/list1.vue"). If not specified, the content of the control is used instead (.vue file format).
     - `Name` - the name of the component (tag-name in app/other components). If not specified and `File` is, the file name (without path / suffix) will be used as the component name.
+    - `Options` - Vue options for the component in JavaScript format. Only used with simple in-line templates.
     - `SquashWS` - Boolean value (default true) indicating if all white space in HTML templates should be squashed (sequences of space, `<LF>`, `<CR>`, `<Tab>` are replaced with a single space).
 
 - **App**
@@ -93,6 +107,7 @@ Otherwise, the easiest way is to start in-line. Then at some point when the page
     Attributes/Properties:
     - `File` - virtual path of a .vue file (for example "/components/list1.vue"). If not specified, the content of the control is used instead (.vue file format).
     - `VarName` - global JavasScript variable name to reference the Vue instance. If omitted, a random value is used.
+    - `Options` - Vue options for the app in JavaScript format. Only used with simple in-line templates.
     - `Mount` - Boolean value (default true) indicating if a `<div>` tag with a random id should be generated and the Vue instance mounted to this.
     - `SquashWS` - Boolean value (default true) indicating if all white space in HTML templates should be squashed (sequences of space, `<LF>`, `<CR>`, `<Tab>` are replaced with a single space).
 
@@ -117,7 +132,7 @@ Otherwise, the easiest way is to start in-line. Then at some point when the page
 - [Using Component control with .vue file](sample-web-site/sample-vue-file.aspx)
 - [Using ServerTemplate control](sample-web-site/sample-servertemplate.aspx)
 
-## Requirements / limitations for .vue files (including in-lined)
+## Requirements / limitations for .vue files (including in-line templates in .vue file format)
 
 Note: The aim of this library is to use a .vue file format which is compatible with standard Vue.js build tools (WebPack etc.). Not the other way around. This library does NOT support all the standard .vue file features.
 
