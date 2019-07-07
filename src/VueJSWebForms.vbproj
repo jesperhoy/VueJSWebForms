@@ -59,7 +59,7 @@
     <Import Include="System.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ScriptTemplate.vb" />
+    <Compile Include="ServerTemplate.vb" />
     <Compile Include="VueComponent.vb" />
     <Compile Include="VueApp.vb" />
     <Compile Include="VueFilesToJS.vb" />

@@ -8,12 +8,12 @@
 
 <body>
 
-<vue:ScriptTemplate ID="template1" runat="server">
+<vue:ServerTemplate ID="template1" runat="server">
 <div>
   <p>Today is: <%:DateTime.Now.ToLongDateString()%></p>
   <p>{{ message }}</p>
 </div>
-</vue:ScriptTemplate>
+</vue:ServerTemplate>
 
 <div id="app"></div>
 

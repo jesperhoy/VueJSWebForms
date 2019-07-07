@@ -1,7 +1,7 @@
 ﻿Imports System.Web.UI
 
 <ParseChildren>
-Public Class ScriptTemplate
+Public Class ServerTemplate
   Inherits System.Web.UI.WebControls.WebControl
 
   Public Property SquashWS As Boolean = True

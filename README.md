@@ -97,7 +97,7 @@ Otherwise, the easiest way is to start in-line. Then at some point when the page
     - `SquashWS` - Boolean value (default true) indicating if all white space in HTML templates should be squashed (sequences of space, `<LF>`, `<CR>`, `<Tab>` are replaced with a single space).
 
   
-- **ScriptTemplate**
+- **ServerTemplate**
 
     Used to extract inner HTML content. The content is not rendered directly to the page but can be obtained through .NET methods.
 
