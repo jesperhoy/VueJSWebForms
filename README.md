@@ -8,10 +8,25 @@ It is based on and includes the [VueFilesToJS library](https://github.com/jesper
 
 [Download the "VueJSWebForms.dll" file](https://github.com/jesperhoy/VueJSWebForms/releases) and drop this into your ASP.NET web site's "bin" folder.
 
-You can reference the assembly in a Web Forms page like this:
+You can reference the library at the top of each Web Forms page like this:
 
 ```ASP
+<%@ Page ... %>
 <%@ Register Assembly="VueJSWebForms" Namespace="VueJSWebForms" TagPrefix="vue" %>
+```
+
+Or you can reference it globally in the `web.config` file:
+
+```XML
+<configuration>
+  <system.web>   
+    <pages>
+      <controls>
+        <add assembly="VueJSWebForms" namespace="VueJSWebForms" tagPrefix="vue" />
+      </controls>
+    </pages>
+  </system.web>
+</configuration>
 ```
 
 And then use the controls with .vue files like this:
