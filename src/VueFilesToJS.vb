@@ -2,25 +2,20 @@
   Private Components As New Dictionary(Of String, Component)
   Private WsRoot As String
   Private SquashWS As Boolean
+  Private FileReadCallback As Action(Of String) = Nothing
 
-  Public Shared Function Compile(wsRootPath As String, vueFile As String, Optional squashWS As Boolean = True) As String
+  Public Shared Function Compile(wsRootPath As String, sourceFile As String, Optional squashWS As Boolean = True, Optional rootFileContent As String = Nothing, Optional fileReadCallback As Action(Of String) = Nothing) As String
     If wsRootPath.EndsWith("\") Then wsRootPath = wsRootPath.Substring(0, wsRootPath.Length - 1)
-    Dim inst = New VueFilesToJS With {.WsRoot = wsRootPath, .SquashWS = squashWS}
-    Return inst.ProcRoot(vueFile, AddressOf My.Computer.FileSystem.ReadAllText)
-  End Function
-
-  Public Shared Function CompileText(txt As String, wsRootPath As String, vueFile As String, Optional squashWS As Boolean = True) As String
-    If wsRootPath.EndsWith("\") Then wsRootPath = wsRootPath.Substring(0, wsRootPath.Length - 1)
-    Dim inst = New VueFilesToJS With {.WsRoot = wsRootPath, .SquashWS = squashWS}
-    Return inst.ProcRoot(vueFile, Function(fn) txt)
+    Dim inst = New VueFilesToJS With {.WsRoot = wsRootPath, .SquashWS = squashWS, .FileReadCallback = fileReadCallback}
+    Return inst.ProcRoot(sourceFile, rootFileContent)
   End Function
 
   Private Sub New()
     REM private constructor so only Compile function can create instance
   End Sub
 
-  Private Function ProcRoot(vueFile As String, loadFile As Func(Of String, String)) As String
-    Dim res = ParseVueFile(vueFile, Nothing, loadFile)
+  Private Function ProcRoot(vueFile As String, FileContent As String) As String
+    Dim res = ParseVueFile(vueFile, Nothing, FileContent)
 
     Dim sb As New System.Text.StringBuilder
     sb.AppendLine("function() {")
@@ -38,10 +33,16 @@
   End Function
 
   'wsroot = "c:\web-sites\tjek" (no ending \)
-  Private Function ParseVueFile(vueFile As String, fromComp As Component, loadFile As Func(Of String, String)) As ParseVueFileResult
+  Private Function ParseVueFile(vueFile As String, fromComp As Component, Optional fileContent As String = Nothing) As ParseVueFileResult
     Dim cp = ResolvePath(vueFile)
     Dim vfWin = WsRoot & cp.Replace("/", "\") & JustFN(vueFile)
-    Dim x = loadFile(vfWin).Trim
+    Dim x As String
+    If fileContent Is Nothing Then
+      If FileReadCallback IsNot Nothing Then FileReadCallback(vfWin)
+      x = My.Computer.FileSystem.ReadAllText(vfWin).Trim
+    Else
+      x = fileContent.Trim
+    End If
 
     If Not x.EndsWith("</script>") Then Throw New Exception(".vue file '" & vueFile & "' does not end with </script>")
     x = x.Substring(0, x.Length - 9).Trim
@@ -171,7 +172,7 @@
     c = New Component With {.Name = compName, .File = vueFile}
     If parentComp IsNot Nothing Then parentComp.SubComps.Add(c)
     Components.Add(compName, c)
-    c.pvfr = ParseVueFile(vueFile, c, AddressOf My.Computer.FileSystem.ReadAllText)
+    c.pvfr = ParseVueFile(vueFile, c)
   End Sub
 
   Private Class Component

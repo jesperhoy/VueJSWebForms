@@ -9,7 +9,7 @@ Friend Module Module1
       If content.Length = 0 Then Throw New Exception("Template is empty")
       If content.StartsWith("<template>", StringComparison.InvariantCultureIgnoreCase) Then
         If Not String.IsNullOrEmpty(prpOptions) Then Throw New Exception("Control cannot have 'Options' property when content starts with <template>")
-        Return "(" & VueFilesToJS.CompileText(content, ctx.Server.MapPath("~/"), ctx.Request.Url.AbsolutePath, prpsquashWS) & ")()"
+        Return "(" & VueFilesToJS.Compile(ctx.Server.MapPath("~/"), ctx.Request.Url.AbsolutePath, prpsquashWS, content) & ")()"
       Else
         prpOptions = If(prpOptions, "").Trim
         If prpOptions.Length = 0 Then prpOptions = "{}"
@@ -19,12 +19,26 @@ Friend Module Module1
                   "template:" & VueFilesToJS.JSStringEncode(content) & "," &
                   prpOptions.Substring(1)
       End If
-    Else
-      REM .vue File
-      If content.Length > 0 Then Throw New Exception("Control cannot have content when used with 'File' property")
-      If Not String.IsNullOrEmpty(prpOptions) Then Throw New Exception("Control cannot both 'File' and 'Options' properties")
-      Return "(" & VueFilesToJS.Compile(ctx.Server.MapPath("~/"), prpFile, prpsquashWS) & ")()"
     End If
+
+    REM .vue File
+    If content.Length > 0 Then Throw New Exception("Control cannot have content when used with 'File' property")
+    If Not String.IsNullOrEmpty(prpOptions) Then Throw New Exception("Control cannot both 'File' and 'Options' properties")
+
+    'If Not useCache Then Return "(" & VueFilesToJS.Compile(ctx.Server.MapPath("~/"), prpFile, prpsquashWS) & ")()"
+
+    Dim f As String
+    Dim CacheKey = "VueJSWebForm:" & ctx.Request.MapPath(prpFile)
+    Dim obj = ctx.Cache.Get(CacheKey)
+    If obj Is Nothing Then
+      Dim FileList As New List(Of String)
+      f = VueFilesToJS.Compile(ctx.Server.MapPath("~/"), prpFile, prpsquashWS, Nothing, AddressOf FileList.Add)
+      ctx.Cache.Add(CacheKey, f, New Web.Caching.CacheDependency(FileList.ToArray), Web.Caching.Cache.NoAbsoluteExpiration, Web.Caching.Cache.NoSlidingExpiration, Web.Caching.CacheItemPriority.Normal, Nothing)
+    Else
+      f = DirectCast(obj, String)
+    End If
+
+    Return "(" & f & ")()"
   End Function
 
 End Module

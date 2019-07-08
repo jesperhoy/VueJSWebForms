@@ -81,11 +81,13 @@ The really cool part about in-line templates is that they can include ASP.NET We
 </vue:Component>        
 ```
 
-## When to use in-line vs. .vue files?
+## .vue files vs. in-line templates
 
-If you need to include server rendered data inside the Vue template (see above), then in-line is the only option.
+If you need to include server rendered data inside the Vue template with `<%...%>` tags (see above), then an in-line template is the only option.
 
-Otherwise, the easiest way is to start in-line. Then at some point when the page becomes too big, it is easy to copy the content of each component/app control to separate (.vue) file.
+Otherwise, the easiest way is to start with in-line templates. Then at some point when the page becomes too big, it is easy to copy the content of each component/app control to separate (.vue) file.
+
+Note: When using .vue files, the JavaScript output is cached between requests (involved .vue files including component imports are monitored for changes). This means that for the first request, using .vue files will be slower than in-line templates because the files(s) have to be loaded from disc. But for subsequent requests, .vue files will be faster than in-line templates because the template processing is already done.
 
 
 ## Web Forms controls 
