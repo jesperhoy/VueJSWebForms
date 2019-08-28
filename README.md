@@ -8,6 +8,8 @@ It is based on and includes the [VueFilesToJS library](https://github.com/jesper
 
 [Download the "VueJSWebForms.dll" file](https://github.com/jesperhoy/VueJSWebForms/releases) and drop this into your ASP.NET web site's "bin" folder.
 
+Or install via [NuGet](https://www.nuget.org/packages/jesperhoy.VueJSWebForms) - search for "jesperhoy.VueJSWebForms".
+
 You can reference the library at the top of each Web Forms page like this:
 
 ```ASP
