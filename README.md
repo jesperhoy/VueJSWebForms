@@ -25,10 +25,6 @@ Or you can reference it globally in the `web.config` file:
     <pages>
       <controls>
         <add assembly="VueJSWebForms" namespace="VueJSWebForms" tagPrefix="vue" />
-      </controls>
-    </pages>
-  </system.web>
-</configuration>
 ```
 
 And then use the controls with .vue files like this:
@@ -95,7 +91,7 @@ The really cool part about in-line templates is that they can include ASP.NET We
             data: <%=SomeDataFromADatabase%>
         }
     </script>
-</vue:Component>        
+</vue:App>
 ```
 
 ## .vue files vs. in-line templates
