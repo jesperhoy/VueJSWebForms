@@ -4,17 +4,17 @@
   Private SquashWS As Boolean
   Private FileReadCallback As Action(Of String) = Nothing
 
-  Public Shared Function Compile(wsRootPath As String, sourceFile As String, Optional squashWS As Boolean = True, Optional rootFileContent As String = Nothing, Optional fileReadCallback As Action(Of String) = Nothing) As String
+  Public Shared Function Compile(wsRootPath As String, sourceFile As String, embedExtra As String, Optional squashWS As Boolean = True, Optional rootFileContent As String = Nothing, Optional fileReadCallback As Action(Of String) = Nothing) As String
     If wsRootPath.EndsWith("\") Then wsRootPath = wsRootPath.Substring(0, wsRootPath.Length - 1)
     Dim inst = New VueFilesToJS With {.WsRoot = wsRootPath, .SquashWS = squashWS, .FileReadCallback = fileReadCallback}
-    Return inst.ProcRoot(sourceFile, rootFileContent)
+    Return inst.ProcRoot(sourceFile, rootFileContent, embedExtra)
   End Function
 
   Private Sub New()
     REM private constructor so only Compile function can create instance
   End Sub
 
-  Private Function ProcRoot(vueFile As String, FileContent As String) As String
+  Private Function ProcRoot(vueFile As String, FileContent As String, embedExtra As String) As String
     Dim res = ParseVueFile(vueFile, Nothing, FileContent)
 
     Dim sb As New System.Text.StringBuilder
@@ -25,6 +25,7 @@
     Next
 
     sb.AppendLine("  return {" & vbCrLf &
+                     embedExtra &
                     "  template: " & JSStringEncode(res.Template) & "," & vbCrLf &
                     res.Script.Substring(1).Trim & ";")
     sb.AppendLine("}")

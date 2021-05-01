@@ -115,6 +115,9 @@ Note: When using .vue files, the JavaScript output is cached between requests (i
     - `Options` - Vue options for the component in JavaScript format. Only used with simple in-line templates.
     - `SquashWS` - Boolean value (default true) indicating if all white space in HTML templates should be squashed (sequences of space, `<LF>`, `<CR>`, `<Tab>` are replaced with a single space).
 
+    Events (server side):
+    - `PostBack(eventArgument)`- Raised when script in the Vue.js component calls `this.$options.PostBack(eventArgument)`. Note that the server control must have an `ID` attribute for this to be available.
+
 - **App**
 
     Makes it easy to render a Vue.js application instance.
@@ -125,6 +128,9 @@ Note: When using .vue files, the JavaScript output is cached between requests (i
     - `Options` - Vue options for the app in JavaScript format. Only used with simple in-line templates.
     - `Mount` - Boolean value (default true) indicating if a `<div>` tag with a random id should be generated and the Vue instance mounted to this.
     - `SquashWS` - Boolean value (default true) indicating if all white space in HTML templates should be squashed (sequences of space, `<LF>`, `<CR>`, `<Tab>` are replaced with a single space).
+
+    Events (server side):
+    - `PostBack(eventArgument)`- Raised when script in the Vue.js application calls `this.$options.PostBack(eventArgument)`. Note that the server control must have an `ID` attribute for this to be available.
 
   
 - **ServerTemplate**

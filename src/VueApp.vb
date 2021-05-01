@@ -3,6 +3,7 @@
 <ParseChildren>
 Public Class App
   Inherits System.Web.UI.WebControls.WebControl
+  Implements IPostBackEventHandler
 
   Property File As String
   Property VarName As String
@@ -10,13 +11,16 @@ Public Class App
   Property Mount As Boolean = True
   Property SquashWS As Boolean = True
 
+  Public Event PostBack(eventArgument As String)
+
   Protected Overrides Sub Render(writer As HtmlTextWriter)
     Dim sw = New IO.StringWriter
     Dim htw = New HtmlTextWriter(sw)
     MyBase.RenderChildren(htw)
     Dim Content = sw.ToString.Trim
 
-    Dim opt = MakeVueOptions(Content, File, Options, SquashWS)
+    Dim opt = MakeVueOptions(Content, File, Options, SquashWS,
+                             If(Me.ID Is Nothing, "", "PostBack(ea) {" & Me.Page.ClientScript.GetPostBackEventReference(Me, "#").Replace("'#'", "ea") & "},"))
 
     If Mount Then
       Dim DivName = "VueApp"
@@ -44,6 +48,10 @@ Public Class App
 
   Public Overrides Sub RenderEndTag(writer As HtmlTextWriter)
     REM nothing
+  End Sub
+
+  Public Sub RaisePostBackEvent(eventArgument As String) Implements IPostBackEventHandler.RaisePostBackEvent
+    RaiseEvent PostBack(eventArgument)
   End Sub
 
 End Class

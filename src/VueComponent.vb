@@ -3,11 +3,14 @@
 <ParseChildren>
 Public Class Component
   Inherits System.Web.UI.WebControls.WebControl
+  Implements IPostBackEventHandler
 
   Property File As String
   Property Name As String
   Property Options As String
   Property SquashWS As Boolean = True
+
+  Public Event PostBack(eventArgument As String)
 
   Protected Overrides Sub Render(writer As HtmlTextWriter)
     If String.IsNullOrEmpty(Name) Then
@@ -21,7 +24,9 @@ Public Class Component
     MyBase.RenderChildren(htw)
     Dim Content = sw.ToString.Trim
 
-    Dim opt = MakeVueOptions(Content, File, Options, SquashWS)
+    Dim opt = MakeVueOptions(Content, File, Options, SquashWS,
+                             If(Me.ID Is Nothing, "", "PostBack(ea) {" & Me.Page.ClientScript.GetPostBackEventReference(Me, "#").Replace("'#'", "ea") & "},"))
+
     writer.WriteLine("<script>")
     writer.WriteLine("Vue.component('" & Name & "'," & opt & ");")
     writer.WriteLine("</script>")
@@ -33,6 +38,10 @@ Public Class Component
 
   Public Overrides Sub RenderEndTag(writer As HtmlTextWriter)
     REM nothing
+  End Sub
+
+  Public Sub RaisePostBackEvent(eventArgument As String) Implements IPostBackEventHandler.RaisePostBackEvent
+    RaiseEvent PostBack(eventArgument)
   End Sub
 
 End Class

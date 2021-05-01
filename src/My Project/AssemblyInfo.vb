@@ -12,7 +12,7 @@ Imports System.Runtime.InteropServices
 <Assembly: AssemblyDescription("")>
 <Assembly: AssemblyCompany("")>
 <Assembly: AssemblyProduct("Vue.js ASP.NET Web Forms helpers")>
-<Assembly: AssemblyCopyright("Copyright © 2018-2019 Jesper Høy")>
+<Assembly: AssemblyCopyright("Copyright © 2018-2021 Jesper Høy")>
 <Assembly: AssemblyTrademark("")>
 
 <Assembly: ComVisible(False)>
@@ -31,5 +31,5 @@ Imports System.Runtime.InteropServices
 ' by using the '*' as shown below:
 ' <Assembly: AssemblyVersion("1.0.*")>
 
-<Assembly: AssemblyVersion("3.2.0.0")>
-<Assembly: AssemblyFileVersion("3.2.0.0")>
+<Assembly: AssemblyVersion("3.3.0.0")>
+<Assembly: AssemblyFileVersion("3.3.0.0")>

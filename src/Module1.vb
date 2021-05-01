@@ -2,20 +2,20 @@
 
 Friend Module Module1
 
-  Friend Function MakeVueOptions(content As String, prpFile As String, prpOptions As String, prpsquashWS As Boolean) As String
+  Friend Function MakeVueOptions(content As String, prpFile As String, prpOptions As String, prpsquashWS As Boolean, embedExtra As String) As String
     Dim ctx = System.Web.HttpContext.Current
     If String.IsNullOrEmpty(prpFile) Then
       REM In-line template
       If content.Length = 0 Then Throw New Exception("Template is empty")
       If content.StartsWith("<template>", StringComparison.InvariantCultureIgnoreCase) Then
         If Not String.IsNullOrEmpty(prpOptions) Then Throw New Exception("Control cannot have 'Options' property when content starts with <template>")
-        Return "(" & VueFilesToJS.Compile(ctx.Server.MapPath("~/"), ctx.Request.Url.AbsolutePath, prpsquashWS, content) & ")()"
+        Return "(" & VueFilesToJS.Compile(ctx.Server.MapPath("~/"), ctx.Request.Url.AbsolutePath, embedExtra, prpsquashWS, content) & ")()"
       Else
         prpOptions = If(prpOptions, "").Trim
         If prpOptions.Length = 0 Then prpOptions = "{}"
         If Not prpOptions.StartsWith("{") OrElse Not prpOptions.EndsWith("}") Then Throw New Exception("Invalid 'Options' property")
         If prpsquashWS Then content = VueFilesToJS.SquashWhiteSpace(content)
-        Return "{" &
+        Return "{" & embedExtra &
                   "template:" & VueFilesToJS.JSStringEncode(content) & "," &
                   prpOptions.Substring(1)
       End If
@@ -32,7 +32,7 @@ Friend Module Module1
     Dim obj = ctx.Cache.Get(CacheKey)
     If obj Is Nothing Then
       Dim FileList As New List(Of String)
-      f = VueFilesToJS.Compile(ctx.Server.MapPath("~/"), prpFile, prpsquashWS, Nothing, AddressOf FileList.Add)
+      f = VueFilesToJS.Compile(ctx.Server.MapPath("~/"), prpFile, embedExtra, prpsquashWS, Nothing, AddressOf FileList.Add)
       ctx.Cache.Add(CacheKey, f, New Web.Caching.CacheDependency(FileList.ToArray), Web.Caching.Cache.NoAbsoluteExpiration, Web.Caching.Cache.NoSlidingExpiration, Web.Caching.CacheItemPriority.Normal, Nothing)
     Else
       f = DirectCast(obj, String)
