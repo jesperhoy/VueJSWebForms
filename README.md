@@ -79,7 +79,7 @@ Or with in-line templates in .vue file format like this:
 
 Note: If an in-line template starts with `<template>`, then the library treats it as .vue file format. Otherwise it treats it as simple.
 
-The really cool part about in-line templates is that they can include ASP.NET Web Forms server tags, which are rendered before Vue.js compiles the template. For example:
+Note: In-line templates can of course include ASP.NET Web Forms server tags, which are rendered before Vue.js compiles the template. For example:
 
 ```HTML
 <vue:App runat="server">
